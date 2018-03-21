@@ -1,0 +1,13 @@
+syntax = "proto3";
+// import "header2.proto"; // 导入其他文件
+// package Protocol; // 也就是命名空间 会被csharp_namespace覆盖
+option csharp_namespace = "Protocol.Battle";
+
+message BattleHandShakeRequest {
+	int32 gameVersion = 5;
+}
+
+message BattleHandShakeRespond {
+	int32 ret = 5;
+	string randomKey = 6;
+}

@@ -1,0 +1,16 @@
+syntax = "proto3";
+import "Battle/HankShake.proto"; // 导入其他文件
+// package Protocol; // 也就是命名空间 会被csharp_namespace覆盖
+
+
+option csharp_namespace = "Protocol.Gateway";
+
+message HandShakeRequest {
+	int32 gameVersion = 5;
+}
+
+message HandShakeRespond {
+	int32 ret = 5;
+	string randomKey = 6;
+	BattleHandShakeRequest a = 7;
+}

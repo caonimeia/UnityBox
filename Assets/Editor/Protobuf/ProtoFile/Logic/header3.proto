@@ -1,0 +1,7 @@
+syntax = "proto3";
+option csharp_namespace = "Protocol.Battle";
+
+message TestProtobuf3 {
+  string name = 1;
+  fixed32 length = 2;
+}

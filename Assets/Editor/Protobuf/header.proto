@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package NetProtocol;
+
+
+message TestProtobuf {
+  string name = 1;
+  fixed32 length = 2;
+}
