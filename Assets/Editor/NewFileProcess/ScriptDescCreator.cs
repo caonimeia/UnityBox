@@ -14,7 +14,7 @@ public class ScriptDescCreator : UnityEditor.AssetModificationProcessor {
             string[] lines = System.IO.File.ReadAllLines(path);
             for(int i = 0; i < lines.Length; i++) {
                 lines[i] = lines[i].Replace("#AUTHORNAME#", "huijie wu");
-                lines[i] = lines[i].Replace("#CREATETIME#", System.DateTime.Now.ToString());
+                lines[i] = lines[i].Replace("#CREATETIME#", System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             }
 
             System.IO.File.WriteAllText(path, string.Join(System.Environment.NewLine, lines), System.Text.Encoding.UTF8);
