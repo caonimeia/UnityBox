@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
+
 // File Name:                 BlinnPhong.shader
 // Author:                    huijie wu
 // Create Time:               2018-03-22 16:08:24
@@ -53,12 +55,16 @@ Shader "MFShader/BlinnPhong"
 				return diffuse;
 			}
 
-			fixed3 BlinnPhong(float3 worldPos, float3 worldNormal) {
+			fixed3 BlinnPhong(float3 worldPos) {
 				// 计算视角方向 由顶点的世界坐标指向摄像机的世界坐标
-				fixed3 viewDir = normalize(_WorldSpaceCameraPos.xyz - worldPos);
+				// fixed3 viewDir = normalize(_WorldSpaceCameraPos.xyz - worldPos.xyz);
+				fixed3 viewDir = normalize(UnityWorldSpaceViewDir(worldPos));
+
+				// fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
+				fixed3 worldLightDir = normalize(UnityWorldSpaceLightDir(worldPos));
 
 				// 视角方向 + 光照方向 再进行归一化
-				fixed3 halfDir = normalize(viewDir + normalize(_WorldSpaceLightPos0.xyz));
+				fixed3 halfDir = normalize(viewDir + worldLightDir);
 
 				return _LightColor0.rgb * _Specular.rgb * pow(saturate(dot(viewDir, halfDir)), _Gloss);
 			}
@@ -68,9 +74,14 @@ Shader "MFShader/BlinnPhong"
 
 				o.pos = UnityObjectToClipPos(i.vertex);
 
-				o.worldNormal = UnityObjectToWorldDir(i.normal);
+				// o.worldNormal = mul(i.normal, (float3x3)unity_WorldToObject);
 
-				o.worldPos = UnityObjectToWorldDir(i.vertex);
+				// o.worldNormal = mul((float3x3)unity_ObjectToWorld, i.normal);
+
+				o.worldNormal = UnityObjectToWorldNormal(i.normal);
+
+				o.worldPos = mul(unity_ObjectToWorld, i.vertex).xyz;
+				// o.worldPos = UnityObjectToWorldDir(i.vertex);
 
 				return o;
 			}
@@ -80,7 +91,7 @@ Shader "MFShader/BlinnPhong"
 
 				fixed3 diffuse = Lambert(i.worldNormal);
 
-				fixed3 specular = BlinnPhong(i.worldPos, i.worldNormal);
+				fixed3 specular = BlinnPhong(i.worldPos);
 
 				return fixed4(ambient + diffuse + specular, 1.0);
 			}
