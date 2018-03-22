@@ -49,19 +49,17 @@ Shader "MFShader/HalfLambert"
 			}
 
 			fixed3 halfLambert(float3 worldNormal) {
-				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;							
-
 				fixed3 vertWorldNormal = normalize(worldNormal);	// 归一化
 
 				fixed3 lightWorldNormal = normalize(_WorldSpaceLightPos0.xyz);
 
 				fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * (dot(vertWorldNormal, lightWorldNormal) * 0.5 + 0.5);	//半兰伯特公式
 
-				return ambient + diffuse;
+				return diffuse;
 			}
 
 			fixed4 frag(v2f i) : SV_Target{
-				return fixed4(halfLambert(i.worldNormal), 1);
+				return fixed4(UNITY_LIGHTMODEL_AMBIENT.xyz + halfLambert(i.worldNormal), 1);
 			}
 			
 			ENDCG
