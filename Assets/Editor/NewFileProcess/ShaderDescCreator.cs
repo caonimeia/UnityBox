@@ -8,16 +8,16 @@
 using System.Collections.Generic;
 
 namespace MFLib {
+    
     public class FileHeaderDesc {
         public static string[] InsertHeaderDesc(string fileName, string[] lines) {
             int index = 0;
             List<string> lineList = new List<string>(lines);
 
-            lineList.Insert(index++, string.Format("{0, -30}{1}", "/* File Name:", fileName));
-            lineList.Insert(index++, string.Format("{0, -30}{1}", "/* Author:", "huijie wu"));
-            lineList.Insert(index++, string.Format("{0, -30}{1}", "/* Create Time:", System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
-            lineList.Insert(index++, string.Format("{0, -30}{1}", "/* Description:", ""));
-            lineList.Insert(index++, " */");
+            lineList.Insert(index++, string.Format("{0, -30}{1}", "// File Name:", fileName));
+            lineList.Insert(index++, string.Format("{0, -30}{1}", "// Author:", "huijie wu"));
+            lineList.Insert(index++, string.Format("{0, -30}{1}", "// Create Time:", System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
+            lineList.Insert(index++, string.Format("{0, -30}{1}", "// Description:", ""));
             lineList.Insert(index++, System.Environment.NewLine);
 
             return lineList.ToArray();
