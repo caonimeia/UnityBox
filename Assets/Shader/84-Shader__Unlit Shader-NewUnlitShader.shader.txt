@@ -27,12 +27,12 @@
 				float3 worldNormal : TEXCOORD0; 
 			};
 
-			v2f vert(a2v i) {
+			v2f vert(a2v v) {
 				v2f o;
 
-				o.pos = UnityObjectToClipPos(i.vertex);
+				o.pos = UnityObjectToClipPos(v.vertex);
 
-				o.worldNormal = UnityObjectToWorldDir(i.normal);
+				o.worldNormal = UnityObjectToWorldDir(v.normal);
 
 				return o;
 			}
